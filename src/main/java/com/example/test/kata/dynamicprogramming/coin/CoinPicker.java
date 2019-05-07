@@ -53,4 +53,44 @@ public class CoinPicker {
       }
     }
   }
+
+  private void min2(int index, int target) {
+    if (index == 1) {
+      this.arrayCount[index] = 1;
+    } else {
+      int min = 0;
+      for (int coin : coins) {
+        if ((index >= coin && this.arrayCount[index - coin] + 1 < min) || min == 0) {
+          min = this.arrayCount[index - coin] + 1;
+        }
+      }
+      this.arrayCount[index] = min;
+    }
+
+    if (index < target) {
+      min2(index + 1, target);
+    }
+  }
+
+  private int[] d;
+  private int[] coins = {1, 3, 5};
+
+  private void d_func(int i, int num) {
+    if (i == 0) {
+      d[i] = 0;
+      d_func(i + 1, num);
+    } else {
+      int min = 9999999;
+      for (int coin : coins) {
+        if (i >= coin && d[i - coin] + 1 < min) {
+          min = d[i - coin] + 1;
+        }
+      }
+      d[i] = min;
+
+      if (i < num) {
+        d_func(i + 1, num);
+      }
+    }
+  }
 }
